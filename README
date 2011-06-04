@@ -1,14 +1,14 @@
-Android��ImageView�ŁA�C���^�[�l�b�g��ɂ���摜��\������Ǝ�ImageView�B
-MIT License�ŁA���R�ɂ��g�����������B
+AndroidのImageViewで、インターネット上にある画像を表示する独自ImageView。
+MIT Licenseで、自由にお使いください。
 
-�ȉ��A���ӓ_�ƃT���v��Activity
-# Android �}�j�t�F�X�g
-* �}�j�t�F�X�g�t�@�C���� android.permission.INTERNET �̃p�[�~�b�V����������
+以下、注意点とサンプルActivity
+# Android マニフェスト
+* マニフェストファイルに android.permission.INTERNET のパーミッションをつける
 
 <uses-permission android:name="android.permission.INTERNET"/>
 
-# layout�t�@�C��
-* ���C�A�E�g�t�@�C���ł́AImageView�Ɠ��l�̐ݒ肪�\�B�ݒ��B
+# layoutファイル
+* レイアウトファイルでは、ImageViewと同様の設定が可能。設定例。
 
 <jp.sharakova.android.urlimageview.UrlImageView
     android:id="@+id/imageView"
@@ -16,7 +16,7 @@ MIT License�ŁA���R�ɂ��g�����������B
     android:layout_height="fill_parent"
     />
 
-# Activity �T���v��
+# Activity サンプル
 package jp.sharakova.android.urlimageview.sample;
 import jp.sharakova.android.urlimageview.CacheUtils;
 import jp.sharakova.android.urlimageview.R;
@@ -54,8 +54,8 @@ public class UrlImageViewSampleActivity extends Activity {
     };
 }
 
-* setOnLoadStartRunnable �ŁA�摜��ǂݍ��ށA���O�ɏ��������鎖���ł��܂��B
-* setOnLoadEndRunnable �ŁA�摜��ǂݍ��񂾌�̏��������s�ł��܂��B
-* setImageUrl�@�ŁA�摜���C���^�[�l�b�g����ǂݍ��݂��J�n���āA�ǂݍ��ݏI���Ɖ摜��\���������܂��B<br />
-�@�ǂݍ��񂾉摜�́A�ꎞ�I��Android���ɃL���b�V�����A2�x�ڂ̕\���ł͍����ɓǂݍ��ގ����ł��܂��B<br />
-* onDestroy�Ŏ��s���Ă���BCacheUtils.deleteAll(this);�@�ŁAAndroid���ɕۑ������L���b�V�����폜�������܂��B<br />
+* setOnLoadStartRunnable で、画像を読み込む、直前に処理を入れる事ができます。
+* setOnLoadEndRunnable で、画像を読み込んだ後の処理を実行できます。
+* setImageUrl　で、画像をインターネットから読み込みを開始して、読み込み終わると画像を表示いたします。<br />
+　読み込んだ画像は、一時的にAndroid内にキャッシュし、2度目の表示では高速に読み込む事ができます。<br />
+* onDestroyで実行している。CacheUtils.deleteAll(this);　で、Android内に保存したキャッシュを削除いたします。<br />
