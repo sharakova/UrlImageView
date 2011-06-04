@@ -1,0 +1,57 @@
+# Android マニフェスト
+* マニフェストファイルに android.permission.INTERNET のパーミッションをつける
+
+<uses-permission android:name="android.permission.INTERNET"/>
+
+# layoutファイル
+* レイアウトファイルでは、ImageViewと同様の設定が可能。設定例。
+
+<jp.sharakova.android.urlimageview.UrlImageView
+    android:id="@+id/imageView"
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent"
+    />
+
+# Activity サンプル
+package jp.sharakova.android.urlimageview.sample;
+import jp.sharakova.android.urlimageview.CacheUtils;
+import jp.sharakova.android.urlimageview.R;
+import jp.sharakova.android.urlimageview.UrlImageView;
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.Toast;
+public class UrlImageViewSampleActivity extends Activity {
+	UrlImageView mImageView;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+        mImageView = (UrlImageView)findViewById(R.id.imageView);
+        mImageView.setOnLoadStartRunnable(startRunnable);
+        mImageView.setOnLoadEndRunnable(endRunnable);
+        mImageView.setImageUrl("http://pic.prcm.jp/gazo/bN9/fAqy87.jpeg");
+    }
+    @Override
+    public void onDestroy() {
+    	CacheUtils.deleteAll(this);
+    	super.onDestroy();
+    }
+    private final Runnable startRunnable = new Runnable() {
+		@Override
+		public void run() {
+			Toast.makeText(getApplicationContext(), "start", Toast.LENGTH_SHORT).show();
+		}
+    };
+    private final Runnable endRunnable = new Runnable() {
+		@Override
+		public void run() {
+			Toast.makeText(getApplicationContext(), "end", Toast.LENGTH_SHORT).show();
+		}
+    };
+}
+
+* setOnLoadStartRunnable で、画像を読み込む、直前に処理を入れる事ができます。
+* setOnLoadEndRunnable で、画像を読み込んだ後の処理を実行できます。
+* setImageUrl　で、画像をインターネットから読み込みを開始して、読み込み終わると画像を表示いたします。<br />
+　読み込んだ画像は、一時的にAndroid内にキャッシュし、2度目の表示では高速に読み込む事ができます。<br />
+* onDestroyで実行している。CacheUtils.deleteAll(this);　で、Android内に保存したキャッシュを削除いたします。<br />
