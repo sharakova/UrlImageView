@@ -18,7 +18,7 @@ public class UrlImageViewSampleActivity extends Activity {
         setContentView(R.layout.main);
         
         mImageView = (UrlImageView)findViewById(R.id.imageView);
-        mImageView.setImageUrl("http://pic.prcm.jp/gazo/bN9/fAqy87.jpeg", imageLoadListener);
+        mImageView.setImageUrl("http://k.yimg.jp/images/top/sp/logo.gif", imageLoadListener);
     }
     
     @Override
@@ -28,7 +28,6 @@ public class UrlImageViewSampleActivity extends Activity {
     }
 
     final private OnImageLoadListener imageLoadListener = new OnImageLoadListener() {
-
 		@Override
 		public void onStart(String url) {
 			Toast.makeText(getApplicationContext(), "start", Toast.LENGTH_SHORT).show();
@@ -38,7 +37,5 @@ public class UrlImageViewSampleActivity extends Activity {
 		public void onComplete(String url) {
 			Toast.makeText(getApplicationContext(), "end", Toast.LENGTH_SHORT).show();
 		}
-    	
-    };
-   
+    };  
 }
