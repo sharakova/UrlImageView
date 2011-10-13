@@ -19,10 +19,10 @@ WorkerThreadを実装しました。スレッド数は５つ。
 * レイアウトファイルでは、ImageViewと同様の設定が可能。設定例。
 
 <jp.sharakova.android.urlimageview.UrlImageView
-    android:id="@+id/imageView"
-    android:layout_width="fill_parent" 
-    android:layout_height="fill_parent"
-    />
+	android:id="@+id/imageView"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent"
+	/>
 
 # Activity サンプル
 package jp.sharakova.android.urlimageview.sample;
@@ -33,31 +33,37 @@ import jp.sharakova.android.urlimageview.UrlImageView.OnImageLoadListener;
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
-public class UrlImageViewSampleActivity extends Activity {	
-	UrlImageView mImageView;
-    /** Called when the activity is first created. */
+
+public class UrlImageViewSampleActivity extends Activity {
+
+	private UrlImageView mImageView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);        
-        mImageView = (UrlImageView)findViewById(R.id.imageView);
-        mImageView.setImageUrl("http://k.yimg.jp/images/top/sp/logo.gif", imageLoadListener);
-    }   
-    @Override
-    public void onDestroy() {
-    	ImageCache.deleteAll(getCacheDir());
-    	super.onDestroy();
-    }
-    final private OnImageLoadListener imageLoadListener = new OnImageLoadListener() {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.main);        
+		mImageView = (UrlImageView)findViewById(R.id.imageView);
+		mImageView.setImageUrl("http://k.yimg.jp/images/top/sp/logo.gif", imageLoadListener);
+	}
+
+	@Override
+	public void onDestroy() {
+		ImageCache.deleteAll(getCacheDir());
+		super.onDestroy();
+	}
+
+	final private OnImageLoadListener imageLoadListener = new OnImageLoadListener() {
+
 		@Override
 		public void onStart(String url) {
 			Toast.makeText(getApplicationContext(), "start", Toast.LENGTH_SHORT).show();
 		}
+
 		@Override
 		public void onComplete(String url) {
 			Toast.makeText(getApplicationContext(), "end", Toast.LENGTH_SHORT).show();
 		}
-    };  
+	};  
 }
 
 
