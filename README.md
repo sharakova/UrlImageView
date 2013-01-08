@@ -15,58 +15,57 @@ MIT Licenseで、自由にお使いください。
 # Android マニフェスト
 * マニフェストファイルに android.permission.INTERNET のパーミッションをつける
 
- <uses-permission android:name="android.permission.INTERNET"/>    
+    <uses-permission android:name="android.permission.INTERNET"/>    
 
 # layoutファイル
 * レイアウトファイルでは、ImageViewと同様の設定が可能。設定例。
 
-<jp.sharakova.android.urlimageview.UrlImageView    
-	android:id="@+id/imageView"    
-	android:layout_width="fill_parent"     
-	android:layout_height="fill_parent"    
-	/>    
+    <jp.sharakova.android.urlimageview.UrlImageView    
+        android:id="@+id/imageView"    
+        android:layout_width="fill_parent"     
+        android:layout_height="fill_parent"    
+        />    
 
 # Activity サンプル
-package jp.sharakova.android.urlimageview.sample;    
-import jp.sharakova.android.urlimageview.ImageCache;    
-import jp.sharakova.android.urlimageview.R;    
-import jp.sharakova.android.urlimageview.UrlImageView;    
-import jp.sharakova.android.urlimageview.UrlImageView.OnImageLoadListener;    
-import android.app.Activity;    
-import android.os.Bundle;    
-import android.widget.Toast;    
+    package jp.sharakova.android.urlimageview.sample;    
+    import jp.sharakova.android.urlimageview.ImageCache;    
+    import jp.sharakova.android.urlimageview.R;    
+    import jp.sharakova.android.urlimageview.UrlImageView;    
+    import jp.sharakova.android.urlimageview.UrlImageView.OnImageLoadListener;    
+    import android.app.Activity;    
+    import android.os.Bundle;    
+    import android.widget.Toast;    
     
-public class UrlImageViewSampleActivity extends Activity {    
+    public class UrlImageViewSampleActivity extends Activity {    
     
-	private UrlImageView mImageView;    
+	    private UrlImageView mImageView;    
     
-	@Override    
-	public void onCreate(Bundle savedInstanceState) {    
-		super.onCreate(savedInstanceState);    
-		setContentView(R.layout.main);    
-		mImageView = (UrlImageView)findViewById(R.id.imageView);    
-		mImageView.setImageUrl("http://k.yimg.jp/images/top/sp/logo.gif", imageLoadListener);    
-	}    
+	    @Override    
+	    public void onCreate(Bundle savedInstanceState) {    
+		    super.onCreate(savedInstanceState);    
+		    setContentView(R.layout.main);    
+		    mImageView = (UrlImageView)findViewById(R.id.imageView);    
+		    mImageView.setImageUrl("http://k.yimg.jp/images/top/sp/logo.gif", imageLoadListener);    
+	    }    
     
-	@Override    
-	public void onDestroy() {    
-		ImageCache.deleteAll(getCacheDir());    
-		super.onDestroy();    
-	}    
+        @Override    
+        public void onDestroy() {    
+            ImageCache.deleteAll(getCacheDir());    
+            super.onDestroy();    
+        }    
     
-	final private OnImageLoadListener imageLoadListener = new OnImageLoadListener() {    
+        final private OnImageLoadListener imageLoadListener = new OnImageLoadListener() {    
+            @Override    
+            public void onStart(String url) {    
+                Toast.makeText(getApplicationContext(), "start", Toast.LENGTH_SHORT).show();    
+            }    
     
-		@Override    
-		public void onStart(String url) {    
-			Toast.makeText(getApplicationContext(), "start", Toast.LENGTH_SHORT).show();    
-		}    
-    
-		@Override    
-		public void onComplete(String url) {    
-			Toast.makeText(getApplicationContext(), "end", Toast.LENGTH_SHORT).show();    
-		}    
-	};    
-}    
+            @Override    
+            public void onComplete(String url) {    
+                Toast.makeText(getApplicationContext(), "end", Toast.LENGTH_SHORT).show();    
+            }    
+        };    
+    }    
 
 
 * OnImageLoadListener の onStart で、画像を読み込む、直前に処理を入れる事ができます。
